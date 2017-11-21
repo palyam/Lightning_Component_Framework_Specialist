@@ -1,0 +1,28 @@
+<aura:component controller="BoatUtils" implements="flexipage:availableForAllPageTypes">
+
+
+	<aura:attribute name="options" type="BoatType__c[]" />
+    <aura:attribute name="selectedValue" type="String" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />
+    
+    <lightning:layout horizontalAlign="center">
+    
+    <lightning:layoutItem flexibility="auto" padding="horizontal-small">
+       <lightning:select name="boatSelect" label="" aura:id="boatSelect" value="{!v.selectedValue}">
+        <option text="All Types" value=""/>
+        <aura:iteration items="{!v.options}" var="item">
+               <option text="{!item.Name}" value="{!item.Id}" selected="{!item.selected}"/>
+         </aura:iteration>
+         
+    </lightning:select>
+    </lightning:layoutItem>
+    <lightning:layoutItem flexibility="auto" padding="around-medium">
+    		<lightning:button variant="brand" label="Search" onclick="{! c.handleClick }" />
+    </lightning:layoutItem>
+    		<lightning:layoutItem flexibility="auto" padding="around-medium">
+    <lightning:button variant="neutral" label="New" onclick="{! c.handleClick }" />
+    </lightning:layoutItem>
+</lightning:layout>
+
+
+</aura:component>	

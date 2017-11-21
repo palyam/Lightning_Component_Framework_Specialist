@@ -1,7 +1,8 @@
 {
-    "orgName": "drivard Company",
+    "orgName": "Lightning Component Framework Specialist",
     "edition": "Developer",
+    "features":["AuthorApex","API","DebugApex"],
     "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled"]
+        "enabled": ["S1DesktopEnabled","ChatterEnabled"]
     }
 }
