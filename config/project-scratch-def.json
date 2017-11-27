@@ -1,8 +1,7 @@
 {
-    "orgName": "Lightning Component Framework Specialist",
+    "orgName": "Salesforce DX Company",
     "edition": "Developer",
-    "features":["AuthorApex","API","DebugApex"],
     "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled","ChatterEnabled"]
+        "enabled": ["S1DesktopEnabled"]
     }
 }

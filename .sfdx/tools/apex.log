@@ -1,0 +1,183 @@
+Nov 20, 2017 8:49:44 PM org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor run
+SEVERE: null
+java.lang.NullPointerException
+20:49:46.703 [ApexIndexer STARTING] INFO  a.jorje.lsp.impl.index.ApexIndexer - Scanning user-defined types.
+20:49:46.703 [Apex Prelude Service STARTING] INFO  a.j.l.i.s.ApexPreludeManagedService - Scanning built-in and system Apex types took 1815 ms.
+cer.java:149)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:77)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:68)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+
+Nov 20, 2017 8:49:44 PM apex.jorje.parser.impl.BaseApexLexer dedupe
+INFO: Deduped array ApexLexer.DFA22_transition. Found 7730596 shorts which is 14MB not including array overhead. Removed 7073965 shorts which is 13MB not counting array overhead.Took 12ms.
+Nov 20, 2017 8:49:45 PM apex.jorje.semantic.compiler.CodeUnit validate
+INFO: unexpected error during apex validate:
+public with sharing class BoatUtils {
+    public BoatUtils() {
+
+    }
+    
+    @AuraEnabled
+    public static List<BoatType__c> getBoatTypes(){
+    		// Check to make sure all fields are accessible to this user
+    		// We know the fields for this request so just check those fields
+    		// as they are the only ones we are returning
+    		
+    		
+    		if ((!Schema.sObjectType.BoatType__c.fields.Name.isAccessible()) && (!Schema.sObjectType.BoatType__c.fields.Id.isAccessible())){
+    			throw new System.NoAccessException();
+    				return null;
+    		}
+    		//They have access so let the data go through
+    		
+    			List<BoatType__c> boats = [SELECT Id, Name FROM BoatType__c];
+    			BoatType__c blank = new BoatType__c;
+    			blank.Name = '';
+    			blank.Id = '';
+    			boats.add(
+    			return boats;
+    
+    		
+    		/*
+    		String[] fieldsToCheck = new String[] {'Id','Name'};
+    		Map<String,Schema.SObjectField> fieldDescribeTokens = Schema.SObjectType.BoatType__c.fields.getMap();
+    		for(String field : fieldsToCheck) {
+    			if( ! fieldDescribeTokens.get(field).getDescribe().isAccessible()) {
+    				throw new System.NoAccessException();
+    				return null;
+    			}
+    		
+    		}
+    		*/
+    	
+    }
+}
+
+java.lang.IllegalStateException: Method already defined: <init> void System.NoAccessException.<init>() from the type System.NoAccessException
+	at apex.common.base.Result.throwIfError(Result.java:112)
+	at apex.jorje.semantic.symbol.member.method.MethodTableFactory.create(MethodTableFactory.java:58)
+	at apex.jorje.semantic.symbol.member.method.MethodTableFactory.create(MethodTableFactory.java:37)
+	at apex.jorje.lsp.impl.index.symbol.VirtualMethodTableInitializer.get(VirtualMethodTableInitializer.java:74)
+	at apex.jorje.lsp.impl.index.symbol.VirtualMethodTableInitializer.get(VirtualMethodTableInitializer.java:40)
+	at apex.common.base.Initializers$MemoizingInitializer.get(Initializers.java:72)
+	at apex.jorje.semantic.symbol.type.AbstractTypeInfo.methods(AbstractTypeInfo.java:123)
+	at apex.jorje.semantic.symbol.resolver.MethodResolver.lookup(MethodResolver.java:69)
+	at apex.jorje.semantic.symbol.resolver.StandardSymbolResolver.lookupMethodInfo(StandardSymbolResolver.java:215)
+	at apex.jorje.semantic.ast.expression.NewObjectExpression$1._default(NewObjectExpression.java:148)
+	at apex.jorje.semantic.ast.expression.NewObjectExpression$1._default(NewObjectExpression.java:126)
+	at apex.jorje.semantic.symbol.type.visitor.TypeInfoVisitor$Default.visit(TypeInfoVisitor.java:56)
+	at apex.jorje.lsp.impl.index.symbol.VirtualStandardTypeInfo.accept(VirtualStandardTypeInfo.java:48)
+	at apex.jorje.semantic.ast.expression.NewObjectExpression.validate(NewObjectExpression.java:125)
+	at apex.jorje.semantic.ast.statement.ThrowStatement.validate(ThrowStatement.java:61)
+	at apex.jorje.semantic.ast.statement.BlockStatement.validate(BlockStatement.java:151)
+	at apex.jorje.semantic.ast.statement.IfBlockStatement.validate(IfBlockStatement.java:62)
+	at apex.jorje.semantic.ast.statement.IfElseBlockStatement.validate(IfElseBlockStatement.java:115)
+	at apex.jorje.semantic.ast.statement.BlockStatement.validate(BlockStatement.java:151)
+	at apex.jorje.semantic.ast.statement.MethodBlockStatement.validate(MethodBlockStatement.java:82)
+	at apex.jorje.semantic.ast.member.Method.validate(Method.java:164)
+	at apex.jorje.semantic.ast.compilation.UserClass.validate(UserClass.java:169)
+	at apex.jorje.semantic.compiler.CodeUnit.validate(CodeUnit.java:199)
+	at apex.jorje.semantic.compiler.CompilerOperations$ValidateOperation.invoke(CompilerOperations.java:106)
+	at apex.jorje.semantic.compiler.ApexCompiler.processNext(ApexCompiler.java:231)
+	at apex.jorje.semantic.compiler.ApexCompiler.compileInternal(ApexCompiler.java:137)
+	at apex.jorje.semantic.compiler.ApexCompiler.compile(ApexCompiler.java:125)
+	at apex.jorje.lsp.impl.services.StandardCompilerService.compile(StandardCompilerService.java:122)
+	at apex.jorje.lsp.impl.diagnostics.DiagnosticsReporter.analyzeErrors(DiagnosticsReporter.java:147)
+	at apex.jorje.lsp.impl.diagnostics.DiagnosticsReporter.generateDiagnostics(DiagnosticsReporter.java:119)
+	at apex.jorje.lsp.impl.diagnostics.DiagnosticsReporter.publishDiagnostics(DiagnosticsReporter.java:106)
+	at java.util.Optional.map(Optional.java:215)
+	at apex.jorje.lsp.impl.diagnostics.DiagnosticsReporter.handleDidOpen(DiagnosticsReporter.java:74)
+	at apex.jorje.lsp.impl.document.DocumentLifecycleDispatcher.lambda$null$0(DocumentLifecycleDispatcher.java:60)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+
+Nov 20, 2017 8:49:46 PM apex.jorje.semantic.compiler.CodeUnit validate
+INFO: unexpected error during apex validate:
+public with sharing class BoatUtils {
+    public BoatUtils() {
+
+    }
+    
+    @AuraEnabled
+    public static List<BoatType__c> getBoatTypes(){
+    		// Check to make sure all fields are accessible to this user
+    		// We know the fields for this request so just check those fields
+    		// as they are the only ones we are returning
+    		
+    		
+    		if ((!Schema.sObjectType.BoatType__c.fields.Name.isAccessible()) && (!Schema.sObjectType.BoatType__c.fields.Id.isAccessible())){
+    			throw new System.NoAccessException();
+    				return null;
+    		}
+    		//They have access so let the data go through
+    		
+    			List<BoatType__c> boats = [SELECT Id, Name FROM BoatType__c];
+    			
+    			return boats;
+    
+    		
+    		/*
+    		String[] fieldsToCheck = new String[] {'Id','Name'};
+    		Map<String,Schema.SObjectField> fieldDescribeTokens = Schema.SObjectType.BoatType__c.fields.getMap();
+    		for(String field : fieldsToCheck) {
+    			if( ! fieldDescribeTokens.get(field).getDescribe().isAccessible()) {
+    				throw new System.NoAccessException();
+    				return null;
+    			}
+    		
+    		}
+    		*/
+    	
+    }
+}
+
+java.lang.IllegalStateException: Method already defined: <init> void System.NoAccessException.<init>() from the type System.NoAccessException
+	at apex.common.base.Result.throwIfError(Result.java:112)
+	at apex.jorje.semantic.symbol.member.method.MethodTableFactory.create(MethodTableFactory.java:58)
+	at apex.jorje.semantic.symbol.member.method.MethodTableFactory.create(MethodTableFactory.java:37)
+	at apex.jorje.lsp.impl.index.symbol.VirtualMethodTableInitializer.get(VirtualMethodTableInitializer.java:74)
+	at apex.jorje.lsp.impl.index.symbol.VirtualMethodTableInitializer.get(VirtualMethodTableInitializer.java:40)
+	at apex.common.base.Initializers$MemoizingInitializer.get(Initializers.java:72)
+	at apex.jorje.semantic.symbol.type.AbstractTypeInfo.methods(AbstractTypeInfo.java:123)
+	at apex.jorje.semantic.symbol.resolver.MethodResolver.lookup(MethodResolver.java:69)
+	at apex.jorje.semantic.symbol.resolver.StandardSymbolResolver.lookupMethodInfo(StandardSymbolResolver.java:215)
+	at apex.jorje.semantic.ast.expression.NewObjectExpression$1._default(NewObjectExpression.java:148)
+	at apex.jorje.semantic.ast.expression.NewObjectExpression$1._default(NewObjectExpression.java:126)
+	at apex.jorje.semantic.symbol.type.visitor.TypeInfoVisitor$Default.visit(TypeInfoVisitor.java:56)
+	at apex.jorje.lsp.impl.index.symbol.VirtualStandardTypeInfo.accept(VirtualStandardTypeInfo.java:48)
+	at apex.jorje.semantic.ast.expression.NewObjectExpression.validate(NewObjectExpression.java:125)
+	at apex.jorje.semantic.ast.statement.ThrowStatement.validate(ThrowStatement.java:61)
+	at apex.jorje.semantic.ast.statement.BlockStatement.validate(BlockStatement.java:151)
+	at apex.jorje.semantic.ast.statement.IfBlockStatement.validate(IfBlockStatement.java:62)
+	at apex.jorje.semantic.ast.statement.IfElseBlockStatement.validate(IfElseBlockStatement.java:115)
+	at apex.jorje.semantic.ast.statement.BlockStatement.validate(BlockStatement.java:151)
+	at apex.jorje.semantic.ast.statement.MethodBlockStatement.validate(MethodBlockStatement.java:82)
+	at apex.jorje.semantic.ast.member.Method.validate(Method.java:164)
+	at apex.jorje.semantic.ast.compilation.UserClass.validate(UserClass.java:169)
+	at apex.jorje.semantic.compiler.CodeUnit.validate(CodeUnit.java:199)
+	at apex.jorje.semantic.compiler.CompilerOperations$ValidateOperation.invoke(CompilerOperations.java:106)
+	at apex.jorje.semantic.compiler.ApexCompiler.processNext(ApexCompiler.java:231)
+	at apex.jorje.semantic.compiler.ApexCompiler.compileInternal(ApexCompiler.java:137)
+	at apex.jorje.semantic.compiler.ApexCompiler.compile(ApexCompiler.java:125)
+	at apex.jorje.lsp.impl.services.StandardCompilerService.compile(StandardCompilerService.java:122)
+	at apex.jorje.lsp.impl.index.ApexIndexer.buildCache(ApexIndexer.java:162)
+	at apex.jorje.lsp.impl.index.ApexIndexer.lambda$startUp$0(ApexIndexer.java:367)
+	at java.util.Optional.ifPresent(Optional.java:159)
+	at apex.jorje.lsp.impl.index.ApexIndexer.startUp(ApexIndexer.java:365)
+	at com.google.common.util.concurrent.AbstractScheduledService$1$3.run(AbstractScheduledService.java:200)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:95)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+
