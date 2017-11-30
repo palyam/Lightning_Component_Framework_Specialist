@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes">
+<aura:component >
 
     <lightning:card title="Find a Boat" class="cardBottom">
         <c:BoatSearchForm />
