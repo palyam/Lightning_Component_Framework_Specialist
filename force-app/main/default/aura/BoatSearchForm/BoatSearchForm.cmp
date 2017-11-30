@@ -4,6 +4,9 @@
     <aura:attribute name="selectedValue" type="String" default=""/>
     <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />
     <aura:attribute name='showNewButton' type='Boolean' default='false'/>
+
+    <aura:method name="checkShowNewButton" action="{!c.loadButton}" />
+    <aura:method name="loadBoatTypes" action="{!c.loadOptions}" />
     
     <lightning:layout horizontalAlign="center">
     
@@ -18,10 +21,10 @@
     </lightning:layoutItem>
     
     <lightning:layoutItem flexibility="auto" padding="around-medium">
-    		<lightning:button variant="brand" label="Search" onclick="{! c.handleClick }" />
+    		<lightning:button variant="brand" label="Search" onclick="{! c.handleClick }" aura:id="SearchButton" />
     
             <aura:if isTrue='{!v.showNewButton}'>
-                <lightning:button variant="neutral" label="New" onclick="{! c.createRecord }" />
+                <lightning:button variant="neutral" label="New" onclick="{! c.createRecord }" aura:id="NewButton"/>
             </aura:if>
         </lightning:layoutItem>         
 </lightning:layout>

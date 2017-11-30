@@ -5,6 +5,15 @@
 
     },
 
+    loadBoats: function (component, event, helper) {
+        helper.getTypesOfBoats(component);
+    },
+
+    loadButton: function (component, event, helper) {
+        helper.renderNewButton(component);
+
+    },
+
     createRecord : function (component, event, helper) {
         
         var boat = component.find("boatSelect").get("v.value");
