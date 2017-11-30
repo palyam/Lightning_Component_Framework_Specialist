@@ -8,6 +8,7 @@ public with sharing class BoatUtils {
     		// Check to make sure all fields are accessible to this user
     		// We know the fields for this request so just check those fields
     		// as they are the only ones we are returning
+			// Need a test class
     	 	
 	      
 
