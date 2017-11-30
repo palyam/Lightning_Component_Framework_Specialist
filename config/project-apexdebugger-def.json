@@ -1,0 +1,8 @@
+{
+    "orgName": "Salesforce DX Lightning Component Framework Specialist - DebugApex",
+    "edition": "Developer",
+    "orgPreferences" : {
+        "enabled": ["S1DesktopEnabled"]
+       },
+    "features": ["DebugApex","API"]  
+}

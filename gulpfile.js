@@ -8,6 +8,8 @@ const path = require('path');
 const colors = gutil.colors;
 const fs = require('fs');
 const pad = require('pad');
+var exec = require('gulp-exec');
+var clean = require('gulp-clean');
 
 let fieldConfigData = fs.readFileSync('config/field-check-overrides.json', 'UTF8');
 let fieldConfig = JSON.parse(fieldConfigData);
@@ -49,6 +51,74 @@ gulp.task('auth', () =>{
     })
     .then(list);
 });
+
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+gulp.task('convert:to:mdapi', () =>{
+    return sfdx.source.convert({
+            rootdir : 'force-app/main/default/',
+            outputdir : 'deploy'
+    })
+  });
+
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+gulp.task('clean:deploy', () =>{
+     gulp.src('deploy/permissionsets', {read: false})
+    .pipe(clean());
+   
+    return gulp.src('deploy/profiles', {read: false})
+    .pipe(clean());
+   
+});
+
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+gulp.task('mdapi:deploy', () =>{
+      return sfdx.mdapi.deploy({
+        targetusername : 'drivard@curious-bear-194608.com',
+        deploydir : 'deploy'
+})
+
+});
+
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+gulp.task('mdapi:report', () =>{
+   
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('sfdx force:mdapi:deploy:report', options))
+    .pipe(exec.reporter(reportOptions));
+})
+
 
 
 const authWeb = () => {
@@ -95,6 +165,16 @@ const createScratchOrg = (definitionfile = 'config/project-scratch-def.json', se
  */
 gulp.task('init:push', ['create'], () => sourcePush());
 
+/**
+ * TASK: push:src
+ * 
+ * Push source to scratch org, depends on create
+ * 
+ * depends: N/A
+ */
+gulp.task('push:src', () => sourcePush());
+
+
 const sourcePush = () => sfdx.source.push({quiet: false});
 
 /**
@@ -105,8 +185,9 @@ const sourcePush = () => sfdx.source.push({quiet: false});
  */
 gulp.task('init:assign', ['init:push'], () => assignPermissionSet());
 
+gulp.task('assign', () => assignPermissionSet());
 
-const assignPermissionSet = (permsetname = 'DreamHouse') => {
+const assignPermissionSet = (permsetname = 'Apex_Debugger') => {
     return sfdx.user.permsetAssign({
         'permsetname': permsetname
     })
@@ -138,8 +219,8 @@ const importData = (plan = 'data/sample-data-plan.json') => {
  */
 gulp.task('watch', () => {
     gulp.watch('force-app/**/*.field-meta.xml', ['check:fields'])
-    gulp.watch(['force-app/**/*.cls', 'force-app/**/*.trigger'], ['push']);
-
+    //gulp.watch(['force-app/**/*.cls', 'force-app/**/*.trigger','force-app/**/*.evt','force-app/**/*.cmp','force-app/**/*.js','force-app/**/*.css','force-app/**/*'], ['push']);
+    gulp.watch(['force-app/**/**'], ['push']);
     pollPull();
 });
 
@@ -162,6 +243,56 @@ gulp.task('clean', () => {
     .then(deleteOrg)
 });
 
+
+gulp.task('install:lts',() => {
+    console.log("installing LTS.....");
+
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('sfdx force:lightning:test:install', options))
+    .pipe(exec.reporter(reportOptions));
+
+     console.log("LTS installed");
+
+});    
+gulp.task('install:fflib',() => {
+    console.log("installing fflib.....");
+
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('git clone git@github.com:financialforcedev/fflib-apex-mocks.git Packages/fflib-apex-mocks', options))
+    .pipe(exec('git clone git@github.com:financialforcedev/fflib-apex-common.git Packages/fflib-apex-common', options))
+    .pipe(exec('sfdx force:mdapi:convert -r Packages/fflib-apex-mocks/src -d force-app/', options))
+    .pipe(exec('sfdx force:mdapi:convert -r Packages/fflib-apex-common/fflib/src -d force-app/', options))
+    .pipe(exec.reporter(reportOptions));
+
+     
+    console.log("installed fflib apex mocks.....");
+     
+
+});    
 
 const deleteOrg = (org) => {
     if(org){
