@@ -22,4 +22,5 @@ script:
 - sfdx force:lightning:test:install -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
+- sfdx force:org:open -p /c/JasmineTesting.app
 - sfdx force:org:delete -u ciorg -p
