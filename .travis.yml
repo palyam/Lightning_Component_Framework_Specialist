@@ -20,7 +20,7 @@ before_install:
 script:
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
 - sfdx force:lightning:test:install -u ciorg
-- sfdx force:package:install -i 04tf40000011Bh4
+- sfdx force:package:install -i 04tf40000011Bh4 -w 2
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
 - sfdx force:org:open -p /c/JasmineTesting.app
