@@ -1,0 +1,22 @@
+public with sharing class BoatSearchResults {
+
+
+    @AuraEnabled
+    public static List<Boat__c> getBoats(String boatTypeId){
+
+        //Security check to make sure that the user has access to the name field
+        if ((!Schema.sObjectType.Boat__c.fields.Name.isAccessible())){
+    			throw new System.NoAccessException();
+    				return null;
+    		}
+            
+        List<Boat__c> boats = new List<Boat__c>();
+        try{
+            boats = [select Id,Name from Boat__c where BoatType__c =: boatTypeId];
+        }catch(Exception e){
+            return boats;
+        }
+        return boats;
+
+    }
+}
