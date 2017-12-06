@@ -23,5 +23,5 @@ script:
 - sfdx force:package:install -i 04tf40000011Bh4 -w 2
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
-- sfdx force:org:open -p /c/JasmineTesting.app
+- sfdx force:lightning:test:run -a JasmineTesting.app
 - sfdx force:org:delete -u ciorg -p
