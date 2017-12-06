@@ -9,11 +9,17 @@
     <members>BoatSearch</members>
     <members>BoatSearchForm</members>
     <members>BoatSearchResults</members>
+    <members>BoatTile</members>
     <members>FriendswithBoats</members>
+    <members>JasmineTesting</members>
+    <members>jasmineTests</members>
   </types>
   <types>
     <name>ApexClass</name>
+    <members>BoatSearchResults</members>
     <members>BoatUtils</members>
+    <members>TestBoatSearchResults</members>
+    <members>TestBoatUtils</members>
   </types>
   <types>
     <name>FlexiPage</name>
@@ -29,13 +35,17 @@
     <members>*</members>
   </types>
   <types>
+    <name>Settings</name>
+    <members>Security</members>
+  </types>
+  <types>
     <name>CustomTab</name>
     <members>Boats</members>
     <members>Friends_with_Boats</members>
   </types>
   <types>
-    <name>CustomObject</name>
-    <members>BoatType__c</members>
+    <name>StaticResource</name>
+    <members>testting</members>
   </types>
   <version>40.0</version>
 </Package>

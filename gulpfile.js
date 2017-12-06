@@ -266,6 +266,30 @@ gulp.task('install:lts',() => {
      console.log("LTS installed");
 
 });    
+//sfdx force:package:install -i 04tf40000011Bh4 -w 2
+
+gulp.task('install:th',() => {
+    console.log("installing trailhead superbadge support package.....");
+
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('sfdx force:package:install -i 04tf40000011Bh4 -w 2', options))
+    .pipe(exec.reporter(reportOptions));
+
+});    
+
+
 gulp.task('install:fflib',() => {
     console.log("installing fflib.....");
 
