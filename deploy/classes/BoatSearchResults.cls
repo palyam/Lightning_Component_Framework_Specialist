@@ -15,9 +15,9 @@ public with sharing class BoatSearchResults {
 
         try{
             if(String.isEmpty(boatTypeId)){
-                boats = [select Id,Name,Picture__c,Contact__c from Boat__c];
+                boats = [select Id,Name,Picture__c,contact__r.Name from Boat__c];
             }else{
-                boats = [select Id,Name,Picture__c,Contact__c  from Boat__c where BoatType__c =: boatTypeId];
+                boats = [select Id,Name,Picture__c,contact__r.Name  from Boat__c where BoatType__c =: boatTypeId];
             }
         }catch(Exception e){
             return boats;
