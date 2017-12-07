@@ -14,6 +14,7 @@ describe("Lightning Component Testing Examples", function(){
         // Each spec (test) renders its components into the same div,
         // so we need to clear that div out at the end of each spec.
         $T.clearRenderedTestComponents();
+        $T.clearRenderedTestComponents();
     });
 
     /**
@@ -53,6 +54,7 @@ describe("Lightning Component Testing Examples", function(){
     describe('c:BoatSearchForm', function(){
         // We encourage you to have the code for c:egRenderElement side by side
         // when reading through this spec.
+        // just a test comment
         it('We have 2 new Boat Types', function(done) {
             // Define where the component should be rendered during the test.
             // You can update Tests.app to define your own DOM element.
