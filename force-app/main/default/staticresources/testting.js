@@ -14,11 +14,11 @@ describe("Lightning Component Testing Examples", function(){
         // Each spec (test) renders its components into the same div,
         // so we need to clear that div out at the end of each spec.
         $T.clearRenderedTestComponents();
-        $T.clearRenderedTestComponents();
+        
     });
 
     /**
-     * Component under test: 'c:egRenderElement':
+     * Component under test: 'c:BoatSearchForm':
      * This spec creates a component, adds it to the body, waits for the rendering to complete,
      * and then ensures that the expected content has been added to the DOM.
      * NOTE: The spec and the component under test are in same locker (same namespace),
@@ -79,5 +79,119 @@ describe("Lightning Component Testing Examples", function(){
     
     }); 
     });
+
+    describe('c:BoatSearchResults', function(){
+        // We encourage you to have the code for c:egRenderElement side by side
+        // when reading through this spec.
+        // just a test comment
+        it('We have 3 Boats being returned ', function(done) {
+            // Define where the component should be rendered during the test.
+            // You can update Tests.app to define your own DOM element.
+            var renderInto = document.getElementById("renderTestComponents");
+            // Instantiate and render the c:egRenderElement Lightning component into the renderInto element.
+            // The second parameter (empty here) is the list of component attribute values to set.
+            $T.createComponent("c:BoatSearchResults", {}, "renderTestComponents")
+              .then(function(component) {
+                var res = {getState : function(){return "SUCCESS";}, getReturnValue: function(){
+                    return [
+                            {Id: "a02Z000000KsfFIIAZ", Name: "Dipsy Doodle", Picture__c: "/resource/Sailboats/sailboat1.png", Contact__c: "003Z000002WG0PFIA1"},
+                            {Id: "a02Z000000KsfFJIAZ", Name: "Gallifrey Falls", Picture__c: "/resource/Sailboats/sailboat2.png", Contact__c: "003Z000002WG0PGIA1"},
+                            {Id: "a02Z000000KsfFKIAZ", Name: "Geronimo", Picture__c: "/resource/Sailboats/skiboat1.png", Contact__c: "003Z000002WG0PHIA1"},
+                    ];}};
+                    spyOn($A, "enqueueAction").and.callFake(function(action) {
+                        var cb = action.getCallback("SUCCESS")
+                        cb.fn.apply(cb.s, [res]);
+                });
+                component.loadBoats();
+                expect(component.get("v.boats").length).toBe(3);
+                // end this spec successfully
+                done();
+            }).catch(function(e) {
+                // end this spec as a failure
+                done.fail(e);
+            });
+    
+    }); 
+    });
+
+    
+describe('c:BoatSearchResults', function(){
+        // We encourage you to have the code for c:egRenderElement side by side
+        // when reading through this spec.
+        // just a test comment
+        it('We Check 3 Boat Names being Returned ', function(done) {
+            // Define where the component should be rendered during the test.
+            // You can update Tests.app to define your own DOM element.
+            var renderInto = document.getElementById("renderTestComponents");
+            // Instantiate and render the c:egRenderElement Lightning component into the renderInto element.
+            // The second parameter (empty here) is the list of component attribute values to set.
+            $T.createComponent("c:BoatSearchResults", {}, "renderTestComponents")
+              .then(function(component) {
+                var res = {getState : function(){return "SUCCESS";}, getReturnValue: function(){
+                    return [
+                            {Id: "a02Z000000KsfFIIAZ", Name: "Dipsy Doodle", Picture__c: "/resource/Sailboats/sailboat1.png", Contact__c: "003Z000002WG0PFIA1"},
+                            {Id: "a02Z000000KsfFJIAZ", Name: "Gallifrey Falls", Picture__c: "/resource/Sailboats/sailboat2.png", Contact__c: "003Z000002WG0PGIA1"},
+                            {Id: "a02Z000000KsfFKIAZ", Name: "Geronimo", Picture__c: "/resource/Sailboats/skiboat1.png", Contact__c: "003Z000002WG0PHIA1"},
+                    ];}};
+                    spyOn($A, "enqueueAction").and.callFake(function(action) {
+                        var cb = action.getCallback("SUCCESS")
+                        cb.fn.apply(cb.s, [res]);
+                });
+                component.loadBoats();
+                expect(component.get("v.boats").length).toBe(3);
+                expect(component.get("v.boats")[0].Name).toBe("Dipsy Doodle");    
+                expect(component.get("v.boats")[1].Name).toBe("Gallifrey Falls");    
+                expect(component.get("v.boats")[2].Name).toBe("Geronimo");    
+                
+                // end this spec successfully
+                done();
+            }).catch(function(e) {
+                // end this spec as a failure
+                done.fail(e);
+            });
+    
+    }); 
+    });
+
+
+    describe('c:BootTile', function(){
+        // We encourage you to have the code for c:egRenderElement side by side
+        // when reading through this spec.
+        // just a test comment
+        it('Test Boat Image Name is Rendered and Correct ', function(done) {
+            // Define where the component should be rendered during the test.
+            // You can update Tests.app to define your own DOM element.
+            var renderInto = document.getElementById("renderTestComponents");
+            // Instantiate and render the c:egRenderElement Lightning component into the renderInto element.
+            // The second parameter (empty here) is the list of component attribute values to set.
+            $T.createComponent("c:BoatSearchResults", {}, "renderTestComponents")
+              .then(function(component) {
+               //component.set('v.boats',[{"Id": "a02Z000000KsfFIIAZ", "Name": "Dipsy Doodle", "Picture__c": "/resource/Sailboats/sailboat1.png", "Contact__r.Name": "Tom"}]) 
+               
+               var res = {getState : function(){return "SUCCESS";}, getReturnValue: function(){
+                return [
+                        {Id: "a02Z000000KsfFKIAZ", Name: "Geronimo", Picture__c: "/resource/Sailboats/skiboat1.png", "Contact__r.Name" : "Tom Brady"},
+                ];}};
+                spyOn($A, "enqueueAction").and.callFake(function(action) {
+                    var cb = action.getCallback("SUCCESS")
+                    cb.fn.apply(cb.s, [res]);
+            });
+               component.loadBoats();
+               expect(component.get("v.boats").length).toBe(1);
+               expect(document.getElementById("boatimage").style.backgroundImage).toContain("skiboat1.png");    
+               expect(component.find("boatcmp").find("selectbutton").get("v.name")).toBe("a02Z000000KsfFKIAZ");
+               //Unable to get Jasmine to expand a value who's lable has a . EXA Contact__r.Name will not expand to Tom Brady
+               expect(component.find("boatcmp").find("contact").get("v.value")).toBe("Tom Brady");  
+               
+                // end this spec successfully
+                done();
+            }).catch(function(e) {
+               // end this spec as a failure
+                done.fail(e);
+            });
+    
+    }); 
+    });
+
 
 });

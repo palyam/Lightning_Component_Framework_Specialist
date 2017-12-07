@@ -3,6 +3,8 @@
                 <aura:attribute name="typeId" type="String" default=""/>
                 <aura:attribute name="boats" type="Boat__c[]" />
                  <aura:handler name="init" value="{!this}" action="{!c.doSearch}" />
+
+                 <aura:method name="loadBoats" action="{!c.doSearch}" />
             
             
             
@@ -16,7 +18,7 @@
                 <aura:if isTrue="{!v.boats.length > 0 }">
                 <aura:iteration items="{!v.boats}" var="boat">
                     <lightning:layoutItem flexibility="auto" size="12" mediumDeviceSize="6" largeDeviceSize="3" padding="around-small">
-                        <c:BoatTile boat="{!boat}"/>
+                        <c:BoatTile boat="{!boat}" aura:id="boatcmp"/>
                     </lightning:layoutItem>
                 </aura:iteration>
             </aura:if>

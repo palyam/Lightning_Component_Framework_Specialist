@@ -3,11 +3,14 @@
                 <aura:attribute name="selected" type="Boolean" default="false"/>
                      
                 <lightning:button name="{!v.boat.Id}" class="{!v.selected == true ?
-                        'tile selected' : 'tile'}" onclick="{!c.onBoatClick}">
-                        <div style="{! 'background-image:url(\'' + v.boat.Picture__c + '\'); '}" class="innertile">
+                        'tile selected' : 'tile'}" onclick="{!c.onBoatClick}" aura:id="selectbutton">
+                        <div id="boatimage" style="{! 'background-image:url(\'' + v.boat.Picture__c + '\'); '}" class="innertile">
                         <div class="lower-third">
-                            <h1 class="slds-truncate">{!v.boat.Contact__r.Name}</h1>
+                            <h1 class="slds-truncate"><ui:outputText aura:id="contact" value="{!v.boat.Contact__r.Name}" /></h1>
                         </div>
                     </div>
                 </lightning:button>
             </aura:component>
+
+
+            
