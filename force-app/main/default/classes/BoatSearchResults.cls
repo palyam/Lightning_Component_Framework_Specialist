@@ -3,7 +3,7 @@ public with sharing class BoatSearchResults {
 
     @AuraEnabled
     public static List<Boat__c> getBoats(String boatTypeId){
-
+        System.debug('Boat Id 1 ' + boatTypeId);
         //Security check to make sure that the user has access to the name field
         if ((!Schema.sObjectType.Boat__c.fields.Name.isAccessible())){
     			throw new System.NoAccessException();
@@ -11,7 +11,7 @@ public with sharing class BoatSearchResults {
     		}
             
         List<Boat__c> boats = new List<Boat__c>();
-
+        System.debug('Boat Id 2 ' + boatTypeId);
 
         try{
             if(String.isEmpty(boatTypeId)){

@@ -29,6 +29,19 @@
 
         });
         createRecordEvent.fire();
-    }
+    },
+
+    fuckme :  function(component, event, helper){
+            console.log('fucking JOKE');
+    },
+    onFormSubmit : function(component, event, helper){
+        var boatTypeId = component.get("v.selectedValue");
+        console.log("Search button pressed " + boatTypeId);
+        var formSubmit = component.getEvent("formsubmit");
+        formSubmit.setParams({"formData":
+                            {"boatTypeId" : boatTypeId}
+        });
+        formSubmit.fire();
+    },
 })
 
