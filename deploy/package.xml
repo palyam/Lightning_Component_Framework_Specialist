@@ -9,6 +9,7 @@
     <members>BoatSearch</members>
     <members>BoatSearchForm</members>
     <members>BoatSearchResults</members>
+    <members>BoatSelect</members>
     <members>BoatTile</members>
     <members>FriendswithBoats</members>
     <members>JasmineTesting</members>

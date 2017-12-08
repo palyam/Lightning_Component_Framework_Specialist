@@ -2,12 +2,14 @@
         
                 <aura:attribute name="typeId" type="String" default=""/>
                 <aura:attribute name="boats" type="Boat__c[]" />
-                 <aura:handler name="init" value="{!this}" action="{!c.doSearch}" />
+                <aura:attribute name="selectedBoatId" type="String" />
 
+                <aura:handler name="init" value="{!this}" action="{!c.doSearch}" />
+                 <aura:handler event="c:BoatSelect" action="{!c.onBoatSelect}"/>
+                 
                  <aura:method name="loadBoats" action="{!c.doSearch}" />
             
-            
-            
+                 
              <lightning:layout horizontalAlign="space" multipleRows="true">
                     <aura:if isTrue="{!v.boats.length == 0 }">
                        <div class="slds-align_absolute-center">
@@ -18,7 +20,7 @@
                 <aura:if isTrue="{!v.boats.length > 0 }">
                 <aura:iteration items="{!v.boats}" var="boat">
                     <lightning:layoutItem flexibility="auto" size="12" mediumDeviceSize="6" largeDeviceSize="3" padding="around-small">
-                        <c:BoatTile boat="{!boat}" aura:id="boatcmp"/>
+                        <c:BoatTile boat="{!boat}" aura:id="boatcmp" selected="{! boat.Id == v.selectedBoatId ? true : false }"/>
                     </lightning:layoutItem>
                 </aura:iteration>
             </aura:if>
