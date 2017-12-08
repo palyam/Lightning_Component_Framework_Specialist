@@ -3,6 +3,8 @@
                 <aura:attribute name="selected" type="Boolean" default="false"/>
 
                 <aura:registerEvent name="BoatSelect" type="c:BoatSelect"/>
+
+                
                 
 
                 <lightning:button name="{!v.boat.Id}" class="{!v.selected == true ?
