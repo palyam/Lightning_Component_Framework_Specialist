@@ -4,6 +4,7 @@
     },
 
     onBoatSelect : function(component, event, helper) {
+        
         var boatId = event.getParam("boatId");
         component.set("v.selectedBoatId",boatId);
 
