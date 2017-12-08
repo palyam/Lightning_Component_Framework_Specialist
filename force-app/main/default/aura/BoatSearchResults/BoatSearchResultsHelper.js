@@ -2,9 +2,10 @@
     onSearch : function(component, event, helper) {
 
         var action = component.get("c.getBoats");
-        var id = component.get("v.typeId");
-
-        action.setParams({boatTypeId : id });
+        var bid = component.get("v.typeId");
+        console.log('bid = ' + bid);
+        
+         action.setParams({boatTypeId : bid });
         
         action.setCallback(this, function(response) {
             var state = response.getState();
