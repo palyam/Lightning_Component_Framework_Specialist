@@ -1,6 +1,7 @@
 <aura:component controller="BoatUtils" implements="flexipage:availableForAllPageTypes" access="global"> 
-
-    <aura:attribute name="options" type="BoatType__c[]" />
+        <aura:registerEvent name="formsubmit" type="c:FormSubmit"/>
+    
+<aura:attribute name="options" type="BoatType__c[]" />
     <aura:attribute name="selectedValue" type="String" default=""/>
     <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />
     <aura:attribute name='showNewButton' type='Boolean' default='false'/>
@@ -21,7 +22,7 @@
     </lightning:layoutItem>
     
     <lightning:layoutItem flexibility="auto" padding="around-medium">
-    		<lightning:button variant="brand" label="Search" onclick="{! c.handleClick }" aura:id="SearchButton" />
+    		<lightning:button variant="brand" label="Search" onclick="{! c.onFormSubmit }" aura:id="SearchButton" />
     
             <aura:if isTrue='{!v.showNewButton}'>
                 <lightning:button variant="neutral" label="New" onclick="{! c.createRecord }" aura:id="NewButton"/>
