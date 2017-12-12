@@ -5,7 +5,7 @@
                 <aura:attribute name="selectedBoatId" type="String" />
 
                 <aura:handler name="init" value="{!this}" action="{!c.doSearch}" />
-                 <aura:handler event="c:BoatSelect" action="{!c.onBoatSelect}"/>
+                <aura:handler name="BoatSelect" event="c:BoatSelect" action="{!c.onBoatSelect}"/>
                  
                  <aura:method name="loadBoats" action="{!c.doSearch}" />
             
