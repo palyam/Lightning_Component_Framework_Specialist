@@ -152,9 +152,8 @@ describe('c:BoatSearchResults', function(){
     
     }); 
     });
-
-
-    describe('c:BootTile', function(){
+    
+describe('c:BootTile', function(){
         // We encourage you to have the code for c:egRenderElement side by side
         // when reading through this spec.
         // just a test comment
@@ -166,8 +165,7 @@ describe('c:BoatSearchResults', function(){
             // The second parameter (empty here) is the list of component attribute values to set.
             $T.createComponent("c:BoatSearchResults", {}, "renderTestComponents")
               .then(function(component) {
-               //component.set('v.boats',[{"Id": "a02Z000000KsfFIIAZ", "Name": "Dipsy Doodle", "Picture__c": "/resource/Sailboats/sailboat1.png", "Contact__r.Name": "Tom"}]) 
-               
+                            
                var res = {getState : function(){return "SUCCESS";}, getReturnValue: function(){
                 return [
                         {Id: "a02Z000000KsfFKIAZ", Name: "Geronimo", Picture__c: "/resource/Sailboats/skiboat1.png", "Contact__r.Name" : "Tom Brady"},
@@ -193,5 +191,51 @@ describe('c:BoatSearchResults', function(){
     }); 
     });
 
+    describe('c:BootTile', function(){
+        // We encourage you to have the code for c:egRenderElement side by side
+        // when reading through this spec.
+        // just a test comment
+        it('Test Event is fired and captured ', function(done) {
+            // Define where the component should be rendered during the test.
+            // You can update Tests.app to define your own DOM element.
+            var renderInto = document.getElementById("renderTestComponents");
+            // Instantiate and render the c:egRenderElement Lightning component into the renderInto element.
+            // The second parameter (empty here) is the list of component attribute values to set.
+
+           
+            $T.createComponent("c:BoatSearchResults", {}, "renderTestComponents")
+              .then(function(component) {
+              
+                var res = {getState : function(){return "SUCCESS";}, getReturnValue: function(){
+                    return [
+                            {Id: "a02Z000000KsfFKIAZ", Name: "Geronimo", Picture__c: "/resource/Sailboats/skiboat1.png", "Contact__r.Name" : "Tom Brady"},
+                    ];}};
+                    spyOn($A, "enqueueAction").and.callFake(function(action) {
+                        var cb = action.getCallback("SUCCESS")
+                        cb.fn.apply(cb.s, [res]);
+                });
+                component.loadBoats();
+                component.set("v.selectedBoatId","")
+                expect(component.get("v.selectedBoatId")).toBe("");    
+                expect(component.get("v.boats").length).toBe(1);
+                expect(component.find("boatcmp").find("selectbutton").get("v.name")).toBe("a02Z000000KsfFKIAZ");
+                expect(component.find("boatcmp").get("v.selected")).toBe(false);
+                
+                var boatSelectEvent = component.find("boatcmp").getEvent("BoatSelect");
+                boatSelectEvent.setParams({ "boatId" : "a02Z000000KsfFKIAZ" });
+                boatSelectEvent.fire();  
+                expect(component.get("v.selectedBoatId")).toBe("a02Z000000KsfFKIAZ");    
+                
+               
+                // end this spec successfully
+                done();
+            }).catch(function(e) {
+               // end this spec as a failure
+                done.fail(e);
+            });
+    
+    }); 
+    });
+    
 
 });

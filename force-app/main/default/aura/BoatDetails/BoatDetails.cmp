@@ -1,0 +1,61 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome, force:hasRecordId">
+
+        <aura:attribute name="id" type="String"/>
+        <aura:attribute name="boat" type="Boat__c"/>
+        <aura:attribute name="record" type="Object"/>
+        <aura:attribute name="recordTemplate" type="Object"/>
+        <aura:attribute name="recordError" type="String"/>
+        <aura:attribute name="mode" type="String" default="VIEW" />
+        <aura:attribute name="isCallbackCalled" type="Boolean" default="false"/>
+
+        <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>
+        <aura:method name="boatselected" action="{!c.onBoatSelected}" />
+        <aura:method name="getNewRecord" action="{!c.getNewRecord}"/> 
+        <aura:method name="reloadRecord" action="{!c.reloadRecord}" />
+
+        <aura:attribute name="logMessage" type="String" description="Message to verify/assert for different operations." />
+        
+        <force:recordData aura:id="recordDataCreate" layoutType="FULL" targetRecord="{!v.recordTemplate}" targetError="{!v.error}" />
+           
+        <force:recordData aura:id="service"
+                          recordId="{!v.id}"
+                          targetRecord="{!v.record}"
+                          mode="VIEW"
+                          fields=  "Id,
+                                    Name,
+                                    Description__c,
+                                    Price__c, Length__c,
+                                    Contact__r.Name,
+                                    Contact__r.Email,
+                                    Contact__r.HomePhone,
+                                    BoatType__r.Name,
+                                    Picture__c"
+    
+                          targetFields="{!v.boat}"
+                          targetError="{!v.recordError}"
+                          recordUpdated="{!c.handleRecordUpdate}" />
+
+
+     <p><ui:outputText aura:id="logMessage" value="{!v.logMessage}" class="slds-text-heading--small" /></p>
+                          
+        <aura:if isTrue="{! !empty(v.boat)}">
+            <article class="slds-card">
+                    <lightning:tabset aura:id="tabset">
+                            
+                    <lightning:tab label="Details" id="details" aura:id="tabdetail">
+                            <c:BoatDetail boat="{!v.boat}" aura:id="detailBoat">
+                                </c:BoatDetail>      
+                     </lightning:tab>
+                        <lightning:tab label="Reviews" id="boatreviewtab">
+                            Sample review
+                        </lightning:tab>
+                        <lightning:tab label="Add Review" id="addReview">
+                            Sample add review
+                        </lightning:tab>
+                    </lightning:tabset>
+            </article>
+        </aura:if>
+        
+
+
+</aura:component>	
