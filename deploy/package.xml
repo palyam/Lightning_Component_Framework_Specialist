@@ -6,8 +6,10 @@
   </types>
   <types>
     <name>AuraDefinitionBundle</name>
+    <members>AddBoatReview</members>
     <members>BoatDetail</members>
     <members>BoatDetails</members>
+    <members>BoatReviewAdded</members>
     <members>BoatSearch</members>
     <members>BoatSearchForm</members>
     <members>BoatSearchResults</members>
@@ -40,11 +42,16 @@
     <members>*</members>
   </types>
   <types>
+    <name>Layout</name>
+    <members>BoatReview__c-BoatReview Layout</members>
+  </types>
+  <types>
     <name>Settings</name>
     <members>Security</members>
   </types>
   <types>
     <name>CustomTab</name>
+    <members>BoatReview__c</members>
     <members>Boats</members>
     <members>Friends_with_Boats</members>
   </types>

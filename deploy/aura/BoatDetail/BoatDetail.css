@@ -9,9 +9,16 @@
     margin-bottom: 3px;
 }
 
-.THIS.imageview {
+.THIS .imageview {
     background-repeat: no-repeat;
     background-size: contain;
     height: 200px;
     margin: 2px;   
+}
+.THIS .innertile {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
 }

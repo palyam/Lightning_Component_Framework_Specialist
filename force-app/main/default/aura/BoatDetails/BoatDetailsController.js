@@ -10,6 +10,10 @@
         component.set("v.id",boat.Id);
         component.find("service").reloadRecord();
    },
+    onBoatReviewAdded : function(component, event, helper) {
+        component.find("tabset").set("v.selectedTabId","boatreviewtab");
+    },
+   
 
        
     handleRecordUpdate : function(cmp, event) {

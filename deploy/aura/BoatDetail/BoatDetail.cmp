@@ -33,16 +33,18 @@
                             </div>
                             <div class="boatproperty">
                                 <span class="label">Description:</span>
-                                 <span><lightning:formattedRichText class="slds-text-longform" value="{!v.boat.BoatType__r.Name}"/></span>
+                                 <span><lightning:formattedRichText class="slds-text-longform" value="{!v.boat.Description__c}"/></span>
                             </div>
                         </div>
                     </lightning:layoutItem>
+                    
                     <lightning:layoutItem flexibility="grow" size="6" mediumDeviceSize="6" largeDeviceSize="6">
-                                      
-                            
-                            
-                                
-                    </lightning:layoutItem>
+                            <lightning:button variant='neutral' label='Full Details' onclick='{!c.onFullDetails}'/>        
+                            <div class="imageview" style="{!'background-image:url(\'' + v.boat.Picture__c + '\')'}"/>
+                        </lightning:layoutItem>
+                    
+                    
+                   
                 </lightning:layout>
             </p>
         </lightning:card>

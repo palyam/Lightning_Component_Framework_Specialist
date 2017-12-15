@@ -12,6 +12,8 @@
         <aura:attribute name="mode" type="String" default="VIEW" />
         <aura:attribute name="isCallbackCalled" type="Boolean" default="false"/>
 
+        <aura:handler name="boatReviewAdded" event="c:BoatReviewAdded" action="{!c.onBoatReviewAdded}"/>
+
         <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>
         <aura:method name="boatselected" action="{!c.onBoatSelected}" />
         <aura:method name="getNewRecord" action="{!c.getNewRecord}"/> 
@@ -48,22 +50,19 @@
                           targetError="{!v.recordError}"
                           recordUpdated="{!c.handleRecordUpdate}" />
 
-
-     <p><ui:outputText aura:id="logMessage" value="{!v.logMessage}" class="slds-text-heading--small" /></p>
-                          
+                      
         <aura:if isTrue="{! !empty(v.boat)}">
             <article class="slds-card">
                     <lightning:tabset aura:id="tabset">
                             
                     <lightning:tab label="Details" id="details" aura:id="tabdetail">
-                            <c:BoatDetail boat="{!v.boat}" aura:id="detailBoat">
-                                </c:BoatDetail>      
+                            <c:BoatDetail boat="{!v.boat}" aura:id="detailBoat"></c:BoatDetail>      
                      </lightning:tab>
                         <lightning:tab label="Reviews" id="boatreviewtab">
                             Sample review
                         </lightning:tab>
                         <lightning:tab label="Add Review" id="addReview">
-                            Sample add review
+                            <c:AddBoatReview boat="{!v.boat}" aura:id="boatreview"></c:AddBoatReview>      
                         </lightning:tab>
                     </lightning:tabset>
             </article>
