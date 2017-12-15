@@ -1,10 +1,14 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome, force:hasRecordId">
 
         <aura:attribute name="id" type="String"/>
+        <aura:attribute name="cid" type="String"/>
         <aura:attribute name="boat" type="Boat__c"/>
+        <aura:attribute name="contact" type="Contact"/>
         <aura:attribute name="record" type="Object"/>
+        <aura:attribute name="crecord" type="Object"/>
         <aura:attribute name="recordTemplate" type="Object"/>
         <aura:attribute name="recordError" type="String"/>
+        <aura:attribute name="error" type="String"/>
         <aura:attribute name="mode" type="String" default="VIEW" />
         <aura:attribute name="isCallbackCalled" type="Boolean" default="false"/>
 
@@ -16,7 +20,16 @@
         <aura:attribute name="logMessage" type="String" description="Message to verify/assert for different operations." />
         
         <force:recordData aura:id="recordDataCreate" layoutType="FULL" targetRecord="{!v.recordTemplate}" targetError="{!v.error}" />
-           
+        <force:recordData aura:id="recordContactCreate" layoutType="FULL" targetRecord="{!v.recordTemplate}" targetError="{!v.error}" />   
+        <force:recordData aura:id="servicecontact"
+                            recordId="{!v.cid}"
+                            targetRecord="{!v.crecord}"
+                            mode="VIEW"
+                            fields="Id"
+                            targetFields="{!v.contact}"
+                            targetError="{!v.recordError}"
+                            recordUpdated="{!c.handleRecordUpdate}" />
+
         <force:recordData aura:id="service"
                           recordId="{!v.id}"
                           targetRecord="{!v.record}"

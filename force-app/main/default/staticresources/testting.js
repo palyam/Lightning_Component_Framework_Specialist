@@ -300,13 +300,13 @@ describe('c:BootTile', function(){
                                   
            
               
-                describe('The Lightning Data Service Testing', function(){
+        describe('The Lightning Data Service Testing', function(){
                     
                         describe('c:BoatDetails', function(){
                             // These tests are making server-side calls and interacting with LDS events,
                             // so increase the default timeout to reduce tests flappiness
                             var originalTimeout;
-                            var defaultTimeout = 10000;
+                            var defaultTimeout = 1000000;
                     
                             beforeEach(function(done) {
                                 originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -319,18 +319,73 @@ describe('c:BootTile', function(){
                                     
                                     that.component = component;
                                     component.set("v.isCallbackCalled", false);
+                                    component.set("v.cid", "N/A");
                                     var recordDataCreate = component.find("recordDataCreate");
-                                    // call getNewRecord of force:recordData
+                                    var recordContactCreate = component.find("recordContactCreate");
+                                    var contactId;
+                                    
+                                    recordContactCreate.getNewRecord("Contact", null, true, function() {
+                                       var record = component.get('v.recordTemplate');
+                                         record.fields.LastName.value="Test Contact " + (Math.round(Math.random()*10000) + 1);
+                                         recordContactCreate.saveRecord(function(saveResult) {
+                                            if (saveResult.state === 'SUCCESS') {
+                                                component.set("v.cid", saveResult.recordId);  
+                                                component.set("v.isCallbackCalled", true);
+                                                expect(component.get("v.cid")).toBe(saveResult.recordId);
+                                                
+                                           }
+                                        });
+                                    });
+                          
+                                    return $T.waitFor(function(){
+                                        return component.get("v.isCallbackCalled") === true && component.get("v.cid") != null;
+                                    }, defaultTimeout).then(function() {
+                                        
+                                        that.component.set("v.isCallbackCalled", false); // the callback function will set this to true once it's called
+                                        recordDataCreate.getNewRecord("Boat__c", null, true, function() {
+                                            // once we have  the record template for new record for given entity then update and save the record
+                                            var record = component.get('v.recordTemplate');
+                                            record.fields.Name.value = "ADSTestBoat" + (Math.round(Math.random()*10000) + 1);
+                                            record.fields.Description__c.value = "Description";
+                                            record.fields.Price__c.value = "123";
+                                            //record.fields.Contact__c.value = "003L000000l38i6";
+                                            record.fields.Contact__c.value = component.get("v.cid");
+                                            recordDataCreate.saveRecord(function(saveResult) {
+                                                if (saveResult.state === 'SUCCESS') {
+                                                    component.set("v.id", saveResult.recordId);  
+                                                    component.set("v.isCallbackCalled", true);
+                                                }
+                                            });
+                                        });    
+                                        return $T.waitFor(function(){
+                                            return that.component.get("v.isCallbackCalled") === true;
+                                        }, defaultTimeout).then(function() {
+                                            
+                                            done();
+                                        }).catch(function(e) {
+                                            done.fail(e);
+                                        });
+                                        
+                                        done();
+                                    
+                                    }).catch(function(e) {
+                                        expect(that.component.get("v.recordError")).toBe("Description");
+                                        done.fail(e);
+                                    });   
+                                   // component.set("v.isCallbackCalled", false);
+                                    /* call getNewRecord of force:recordData
                                     recordDataCreate.getNewRecord("Boat__c", null, true, function() {
                                         // once we have  the record template for new record for given entity then update and save the record
                                         var record = component.get('v.recordTemplate');
                                         record.fields.Name.value = "ADSTestBoat" + (Math.round(Math.random()*10000) + 1);
                                         record.fields.Description__c.value = "Description";
                                         record.fields.Price__c.value = "123";
-                                        record.fields.Contact__c.value = "003L000000l31hs";
+                                        //record.fields.Contact__c.value = "003L000000l38i6";
+                                        record.fields.Contact__c.value = component.get("v.cid");
                                         recordDataCreate.saveRecord(function(saveResult) {
                                             if (saveResult.state === 'SUCCESS') {
-                                                component.set("v.id", saveResult.recordId);
+                                                expect(component.get("v.cid")).toBe("dsadasfdsasd");
+                                                component.set("v.id", saveResult.recordId);  
                                                 component.set("v.isCallbackCalled", true);
                                             }
                                         });
@@ -343,9 +398,12 @@ describe('c:BootTile', function(){
                                 }).catch(function(e) {
                                     done.fail(e);
                                 });
+                                
                             });
-                    
-                            afterEach(function() {
+                    */
+                });
+            });        
+                    afterEach(function() {
                                 // Each spec (test) renders its components into the same div,
                                 // so we need to clear that div out at the end of each spec.
                                 $T.clearRenderedTestComponents();
@@ -361,8 +419,10 @@ describe('c:BootTile', function(){
                               
                                 it('loads a record and logs a success message when a record is reloaded then deletes the record', function(done) {
                                     var that = this;
-                                    that.component.set("v.isCallbackCalled", false); // the callback function will set this to true once it's called
+                                   
                                     
+                                    
+                                    that.component.set("v.isCallbackCalled", false); // the callback function will set this to true once it's called
                                     
                                     that.component.find("service").reloadRecord(false, function(){
                                         // verify record is reloaded. callback will be called after recordUpdated event is fired
@@ -370,7 +430,7 @@ describe('c:BootTile', function(){
                                     });
                                     
                                     return $T.waitFor(function(){
-                                        return that.component.get("v.isCallbackCalled") === true;
+                                        return that.component.get("v.isCallbackCalled") === true && that.component.get("v.id") != null;
                                     }, defaultTimeout).then(function() {
                                         expect(that.component.find("logMessage").get("v.value")).toBe("Record has been loaded.");
                                         expect(that.component.get("v.record.fields.Price__c.value")).toBe(123);
@@ -386,23 +446,23 @@ describe('c:BootTile', function(){
                                             return that.component.get("v.isCallbackCalled") === true;
                                         }, defaultTimeout).then(function() {
                                             expect(that.component.find("logMessage").get("v.value")).toBe("Record has been removed.");
-                                            done();
+                                            done();    
                                         }).catch(function(e) {
                                             done.fail(e);
                                         });
                                         
-                                        done();
+                                        
                                     
                                     }).catch(function(e) {
+                                        expect(that.component.get("v.recordError")).toBe("Description");
                                         done.fail(e);
                                     });
                               
-                        
-                                
+                                    
+                                   
                             });
                                 
                     });
                 });
   
-           
 });
