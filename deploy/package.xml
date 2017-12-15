@@ -6,10 +6,13 @@
   </types>
   <types>
     <name>AuraDefinitionBundle</name>
+    <members>BoatDetail</members>
+    <members>BoatDetails</members>
     <members>BoatSearch</members>
     <members>BoatSearchForm</members>
     <members>BoatSearchResults</members>
     <members>BoatSelect</members>
+    <members>BoatSelected</members>
     <members>BoatTile</members>
     <members>FormSubmit</members>
     <members>FriendswithBoats</members>

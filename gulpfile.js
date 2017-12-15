@@ -52,6 +52,21 @@ gulp.task('auth', () =>{
     .then(list);
 });
 
+
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+gulp.task('trail:rebuild', () =>{
+    createScratchOrg();
+    installLTS();
+    installTrailHeadPackage();
+    runTests();
+    runLightningServiceTests();
+});
+
 /**
  * 
  * 
@@ -155,6 +170,8 @@ const createScratchOrg = (definitionfile = 'config/project-scratch-def.json', se
         'setdefaultusername': setdefaultusername    
     });
 }
+
+
 
 /**
  * TASK: init:push
@@ -318,6 +335,44 @@ gulp.task('install:fflib',() => {
 
 });    
 
+
+const installTrailHeadPackage = () => {
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('sfdx force:package:install -i 04tf40000011Bh4 -w 2', options))
+    .pipe(exec.reporter(reportOptions));
+
+}
+const installLTS = () => {
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('sfdx force:lightning:test:install', options))
+    .pipe(exec.reporter(reportOptions));
+
+}
+
 const deleteOrg = (org) => {
     if(org){
         return sfdx.org.delete({
@@ -378,6 +433,24 @@ const runTests = () => {
     });
 }
 
+const runLightningServiceTests = () => {
+
+    var options = {
+        continueOnError: false, // default = false, true means don't emit error event 
+        pipeStdout: false, // default = false, true means stdout is written to file.contents 
+        customTemplatingThing: "test" // content passed to gutil.template() 
+      };
+
+      var reportOptions = {
+        err: true, // default = true, false means don't write err 
+        stderr: true, // default = true, false means don't write stderr 
+        stdout: true // default = true, false means don't write stdout 
+    };
+
+    return gulp.src('')
+    .pipe(exec('sfdx force:lightning:test:run -a JasmineTesting.app', options))
+    .pipe(exec.reporter(reportOptions));
+}
 
 const open = () =>{
     return !process.env.CI && sfdx.org.open({quiet: false});

@@ -1,12 +1,12 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
                 <aura:attribute name="boat" type="Boat__c"/>
                 <aura:attribute name="selected" type="Boolean" default="false"/>
-
                 <aura:registerEvent name="BoatSelect" type="c:BoatSelect"/>
-
                 
-                
+                <aura:registerEvent name="BoatSelected" type="c:BoatSelected"/>
 
+                <aura:method name="boatselected" action="{!c.onBoatClick}" />
+                
                 <lightning:button name="{!v.boat.Id}" class="{!v.selected == true ?
                         'tile selected' : 'tile'}" onclick="{!c.onBoatClick}" aura:id="selectbutton">
                         <div id="boatimage" style="{! 'background-image:url(\'' + v.boat.Picture__c + '\'); '}" class="innertile">
