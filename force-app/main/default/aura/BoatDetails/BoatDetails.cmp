@@ -50,6 +50,7 @@
                           targetError="{!v.recordError}"
                           recordUpdated="{!c.handleRecordUpdate}" />
 
+                          
                       
         <aura:if isTrue="{! !empty(v.boat)}">
             <article class="slds-card">
