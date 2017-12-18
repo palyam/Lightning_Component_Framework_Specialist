@@ -369,7 +369,7 @@ describe('c:BootTile', function(){
                                         done();
                                     
                                     }).catch(function(e) {
-                                        expect(that.component.get("v.recordError")).toBe("Description");
+                                        //expect(that.component.get("v.recordError")).toBe("Description");
                                         done.fail(e);
                                     });   
                                    // component.set("v.isCallbackCalled", false);
@@ -432,20 +432,20 @@ describe('c:BootTile', function(){
                                     return $T.waitFor(function(){
                                         return that.component.get("v.isCallbackCalled") === true && that.component.get("v.id") != null;
                                     }, defaultTimeout).then(function() {
-                                        expect(that.component.find("logMessage").get("v.value")).toBe("Record has been loaded.");
+                                        expect(that.component.get("v.logMessage")).toBe("Record has been loaded.");
                                         expect(that.component.get("v.record.fields.Price__c.value")).toBe(123);
                                         expect(that.component.get("v.record.fields.Name.value")).toContain("ADSTestBoat");
                                         expect(that.component.get("v.record.fields.Description__c.value")).toBe("Description");
                                         
                                         that.component.set("v.isCallbackCalled", false); // the callback function will set this to true once it's called
                                         that.component.find("service").deleteRecord(function(){
-                                             that.component.set("v.isCallbackCalled", true);
+                                        that.component.set("v.isCallbackCalled", true);
                                         });
                                         
                                         return $T.waitFor(function(){
                                             return that.component.get("v.isCallbackCalled") === true;
                                         }, defaultTimeout).then(function() {
-                                            expect(that.component.find("logMessage").get("v.value")).toBe("Record has been removed.");
+                                            expect(that.component.get("v.logMessage")).toBe("Record has been removed.");
                                             done();    
                                         }).catch(function(e) {
                                             done.fail(e);
@@ -454,7 +454,7 @@ describe('c:BootTile', function(){
                                         
                                     
                                     }).catch(function(e) {
-                                        expect(that.component.get("v.recordError")).toBe("Description");
+                                       
                                         done.fail(e);
                                     });
                               

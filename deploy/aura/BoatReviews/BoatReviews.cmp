@@ -1,12 +1,10 @@
 <aura:component controller="BoatReviews">
 
         <aura:attribute name="boat" type="Boat__c"/>
-        <aura:attribute name="boatReviews" type="BoatReview__c[]" access="private"/>
+        <aura:attribute name="boatReviews" type="BoatReview__c" access="private"/>
         <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
         <aura:method name="refresh" action="{!c.doInit}" />
         <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>
-        <aura:handler name="change" value="{!v.boat}" action="{!c.refresh}"/>
-        
 
     
         <ui:scrollerWrapper class="scrollerSize">

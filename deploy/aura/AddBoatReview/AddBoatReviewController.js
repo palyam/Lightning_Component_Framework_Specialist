@@ -1,5 +1,6 @@
 ({
     doInit : function(component, event, helper) {
+        console.log("AddBoatReview doInit Called");
         helper.onInit(component, event, helper)
     },
     

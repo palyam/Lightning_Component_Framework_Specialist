@@ -6,7 +6,7 @@
     <aura:attribute name="boatReviewRecord" type="Object"/>
     <aura:attribute name="errorMessage" type="String"/>
     <aura:attribute name="validity" type="String"/>
-    <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="recordError" type="String" access="private"/>
     <aura:attribute name="recordUpdate" type="String"/>
     <aura:registerEvent name="boatReviewAdded" type="c:BoatReviewAdded"/>
     
