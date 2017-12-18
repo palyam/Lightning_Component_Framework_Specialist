@@ -60,7 +60,7 @@
                             <c:BoatDetail boat="{!v.boat}" aura:id="detailBoat"></c:BoatDetail>      
                      </lightning:tab>
                         <lightning:tab label="Reviews" id="boatreviewtab">
-                            Sample review
+                                <c:BoatReviews boat="{!v.boat}" aura:id="reviews"></c:BoatReviews>    
                         </lightning:tab>
                         <lightning:tab label="Add Review" id="addReview">
                             <c:AddBoatReview boat="{!v.boat}" aura:id="boatreview"></c:AddBoatReview>      

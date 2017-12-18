@@ -10,8 +10,11 @@
         component.set("v.id",boat.Id);
         component.find("service").reloadRecord();
    },
-    onBoatReviewAdded : function(component, event, helper) {
-        component.find("tabset").set("v.selectedTabId","boatreviewtab");
+     onBoatReviewAdded : function(component, event, helper) {
+        if( cmp.find("reviews")){
+            cmp.find("reviews").refresh();
+        }   
+            component.find("tabset").set("v.selectedTabId","boatreviewtab");
     },
    
 
@@ -21,10 +24,17 @@
         var changeType = event.getParam("changeType");
         if(changeType === "LOADED") {
             // handle record loaded
+            console.log("Record has been LOADED.")
+            if( cmp.find("reviews")){
+                cmp.find("reviews").refresh();
+            }   
             cmp.set("v.logMessage", "Record has been loaded.");
+
         } else if(changeType === "CHANGED") {
             // handle record changed
+            
             cmp.set("v.logMessage", "Record has been changed.");
+            
         } else if(changeType === "REMOVED") {
             // handle record removed
             cmp.set("v.logMessage", "Record has been removed.");
