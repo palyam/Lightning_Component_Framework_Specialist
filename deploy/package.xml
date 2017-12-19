@@ -21,6 +21,8 @@
     <members>FormSubmit</members>
     <members>FriendswithBoats</members>
     <members>JasmineTesting</members>
+    <members>Map</members>
+    <members>PlotMapMarker</members>
     <members>jasmineTests</members>
   </types>
   <types>
