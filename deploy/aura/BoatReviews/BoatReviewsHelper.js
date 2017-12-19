@@ -13,6 +13,7 @@
                 console.log("Boatreview = " + response.getReturnValue());
                 component.set("v.boatReviews", response.getReturnValue());
                 console.log("Boatreview attribute = " + component.get("v.boatReviews"));
+                
 
             }
             

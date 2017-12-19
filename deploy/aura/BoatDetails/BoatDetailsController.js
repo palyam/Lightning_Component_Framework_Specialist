@@ -11,8 +11,8 @@
         component.find("service").reloadRecord();
    },
      onBoatReviewAdded : function(component, event, helper) {
-        if( cmp.find("reviews")){
-            cmp.find("reviews").refresh();
+        if( component.find("reviews")){
+            component.find("reviews").refresh();
         }   
             component.find("tabset").set("v.selectedTabId","boatreviewtab");
     },
