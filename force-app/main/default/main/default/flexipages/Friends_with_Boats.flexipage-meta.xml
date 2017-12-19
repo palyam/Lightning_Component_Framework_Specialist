@@ -15,6 +15,17 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>height</name>
+                <value>200px</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>width</name>
+                <value>100%</value>
+            </componentInstanceProperties>
+            <componentName>Map</componentName>
+        </componentInstances>
         <name>region3</name>
         <type>Region</type>
     </flexiPageRegions>

@@ -12,5 +12,21 @@
         boatSelectedEvent.setParams({ "boat" : boat });
         boatSelectedEvent.fire();
 
+        var lat = boat.Geolocation__Latitude__s;
+        var long = boat.Geolocation__Longitude__s;
+        var label = boat.Name;
+        var sObjectId;
+        console.log("Geo " + lat + " " + long + " " + label);
+        
+        var PlotMapMarker = $A.get("e.c:PlotMapMarker");
+        PlotMapMarker.setParams({
+            "lat"   : lat,
+            "long"  : long,
+            "label" : label,
+            "SObjectId" : boat.Id
+        });
+
+        PlotMapMarker.fire();
+
     }
 })
